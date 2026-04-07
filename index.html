@@ -2,7 +2,7 @@
 <html class="dark" lang="pt-BR">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>Paulo Catarino | Desenvolvedor Full-Stack & Arquiteto Digital</title>
 <meta name="description" content="Paulo Catarino - Desenvolvedor Full-Stack e Arquiteto Digital. Construindo experiências digitais com precisão e paixão no Rio de Janeiro."/>
 <meta name="robots" content="index, follow"/>
@@ -201,11 +201,14 @@ tailwind.config = {
   ::-webkit-scrollbar-thumb { background: #25252d; border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: #48474d; }
 
-  /* Form fields */
+  /* Form fields — 16px+ no mobile evita zoom automático no iOS Safari */
   input, textarea, select {
     outline: none;
     font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
+    font-size: 1rem;
+  }
+  @media (min-width: 768px) {
+    input, textarea, select { font-size: 0.9rem; }
   }
   input:focus, textarea:focus, select:focus {
     outline: none;
@@ -231,6 +234,10 @@ tailwind.config = {
     user-select: none;
     -webkit-user-select: none;
     touch-action: none;
+  }
+  /* Em telas < lg: não bloquear rolagem vertical com touch-action:none */
+  @media (max-width: 1023px) {
+    .draggable-card { touch-action: pan-y pinch-zoom; }
   }
   .draggable-card.dragging {
     animation: none !important;
@@ -278,7 +285,7 @@ tailwind.config = {
 <canvas id="particles-canvas"></canvas>
 
 <!-- ========== NAVIGATION ========== -->
-<nav id="main-nav" class="fixed top-0 w-full z-50 transition-all duration-500" style="background: rgba(14,14,19,0.6); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);">
+<nav id="main-nav" class="fixed top-0 w-full z-50 transition-all duration-500" style="background: rgba(14,14,19,0.6); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); padding-top: env(safe-area-inset-top, 0px);">
   <div class="flex justify-between items-center px-6 md:px-8 py-4 max-w-7xl mx-auto w-full">
     <a href="#hero" class="text-2xl font-bold tracking-tighter text-on-surface font-headline hover:text-primary transition-colors">PC<span class="text-primary">.</span></a>
     <div class="hidden md:flex items-center space-x-10">
@@ -297,7 +304,7 @@ tailwind.config = {
 </nav>
 
 <!-- Mobile Menu -->
-<div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-72 h-full z-[60] bg-surface-container/95 backdrop-blur-2xl flex flex-col pt-20 px-8 gap-6">
+<div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-72 min-h-[100dvh] h-full z-[60] bg-surface-container/95 backdrop-blur-2xl flex flex-col pt-[max(5rem,env(safe-area-inset-top,0px)+3rem)] px-8 gap-6 pb-[env(safe-area-inset-bottom,0px)]">
   <button id="mobile-close" class="absolute top-5 right-5 text-on-surface-variant hover:text-on-surface transition-colors">
     <span class="material-symbols-outlined text-2xl">close</span>
   </button>
@@ -754,7 +761,7 @@ tailwind.config = {
 </section>
 
 <!-- ========== FOOTER ========== -->
-<footer class="w-full py-12 md:py-16 mt-20 bg-surface-container-lowest border-t border-outline-variant/10 relative z-10">
+<footer class="w-full py-12 md:py-16 mt-20 bg-surface-container-lowest border-t border-outline-variant/10 relative z-10" style="padding-bottom: max(3rem, env(safe-area-inset-bottom, 0px));">
   <div class="flex flex-col md:flex-row justify-between items-center px-6 md:px-12 max-w-7xl mx-auto gap-6">
     <p class="font-label uppercase tracking-[0.2em] text-[10px] text-outline order-2 md:order-1">&copy; 2026 PAULO CATARINO. PROJETADO COM PRECISÃO.</p>
     <div class="flex items-center space-x-8 order-1 md:order-2">
@@ -1486,6 +1493,8 @@ document.querySelectorAll('a[href*="mailto"], a[href*="wa.me"], a[href*="tel:"]'
 (function initDraggableCards() {
   const cards = document.querySelectorAll('.draggable-card');
   const container = document.getElementById('hero');
+  /* Só arrastar com mouse/trackpad (hover); evita briga com scroll no touch */
+  if (!window.matchMedia('(min-width: 1024px) and (hover: hover)').matches) return;
 
   cards.forEach(card => {
     let isDragging = false;
