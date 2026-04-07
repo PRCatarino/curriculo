@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-surface": "#fcf8ff",
+                    "outline-variant": "#48474d",
+                    "primary-container": "#00eefc",
+                    "on-tertiary-fixed": "#33002d",
+                    "on-secondary-fixed": "#41009a",
+                    "secondary": "#ac89ff",
+                    "surface-container-low": "#131319",
+                    "tertiary-container": "#ff05e5",
+                    "error-container": "#a70138",
+                    "surface-dim": "#0e0e13",
+                    "tertiary-fixed-dim": "#ff68e3",
+                    "surface-container-highest": "#25252d",
+                    "on-primary-fixed-variant": "#005e64",
+                    "secondary-fixed-dim": "#ceb9ff",
+                    "primary-fixed": "#00eefc",
+                    "on-primary-container": "#005359",
+                    "surface": "#0e0e13",
+                    "on-tertiary-fixed-variant": "#6d0061",
+                    "on-tertiary-container": "#1b0017",
+                    "primary-fixed-dim": "#00deec",
+                    "surface-container": "#19191f",
+                    "on-primary": "#005d63",
+                    "inverse-primary": "#006a71",
+                    "surface-variant": "#25252d",
+                    "surface-bright": "#2c2b33",
+                    "error-dim": "#d73357",
+                    "surface-container-lowest": "#000000",
+                    "on-tertiary": "#42003a",
+                    "error": "#ff6e84",
+                    "tertiary-dim": "#ff59e3",
+                    "on-secondary": "#290067",
+                    "on-error-container": "#ffb2b9",
+                    "secondary-dim": "#874cff",
+                    "primary-dim": "#00deec",
+                    "primary": "#8ff5ff",
+                    "on-surface-variant": "#acaab1",
+                    "on-primary-fixed": "#003f43",
+                    "on-secondary-container": "#f8f1ff",
+                    "surface-tint": "#8ff5ff",
+                    "tertiary-fixed": "#ff85e4",
+                    "secondary-container": "#7000ff",
+                    "on-surface": "#f9f5fd",
+                    "background": "#0e0e13",
+                    "tertiary": "#ff59e3",
+                    "surface-container-high": "#1f1f26",
+                    "on-background": "#f9f5fd",
+                    "on-error": "#490013",
+                    "on-secondary-fixed-variant": "#6300e2",
+                    "secondary-fixed": "#dac9ff",
+                    "inverse-on-surface": "#55545b",
+                    "outline": "#76747b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-transition { transition: background-color 0.3s ease; }
+        .glass-panel {
+            background: rgba(37, 37, 45, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(72, 71, 77, 0.15);
+        }
+        .glow-overlay {
+            background: linear-gradient(45deg, #8ff5ff26, #ac89ff26);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-zinc-950/60 backdrop-blur-xl">
+<div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto w-full">
+<span class="text-2xl font-bold tracking-tighter text-zinc-100 font-headline">LUMINARY</span>
+<div class="hidden md:flex items-center space-x-10">
+<a class="font-headline tracking-tight text-cyan-400 border-b-2 border-cyan-400 pb-1" href="#">TRABALHOS</a>
+<a class="font-headline tracking-tight text-zinc-400 hover:text-zinc-100 transition-colors" href="#">EXPERIÊNCIA</a>
+<a class="font-headline tracking-tight text-zinc-400 hover:text-zinc-100 transition-colors" href="#">TECNOLOGIA</a>
+<a class="font-headline tracking-tight text-zinc-400 hover:text-zinc-100 transition-colors" href="#">CONTATO</a>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-xl font-label text-xs font-extrabold tracking-widest hover:bg-white/5 transition-all duration-300 scale-95 active:scale-90 uppercase">BAIXAR CURRÍCULO</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="relative overflow-hidden min-h-screen pt-24">
+<!-- Background Lighting/Atmosphere -->
+<div class="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-secondary/10 blur-[150px] rounded-full pointer-events-none"></div>
+<!-- Hero Section -->
+<section class="relative max-w-7xl mx-auto px-8 py-20 lg:py-40 flex flex-col lg:flex-row items-center gap-16">
+<!-- Hero Content -->
+<div class="w-full lg:w-3/5 z-10">
+<div class="mb-6">
+<span class="font-label text-primary tracking-[0.3em] text-[10px] uppercase font-bold">Arquiteto Digital &amp; Engenheiro</span>
+</div>
+<h1 class="font-headline text-7xl md:text-9xl font-bold tracking-tighter text-on-surface mb-8 leading-[0.9]">
+                    PAULO<br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-tertiary">CATARINO</span>
+</h1>
+<p class="text-on-surface-variant text-xl md:text-2xl max-w-xl font-light mb-12 leading-relaxed">Construindo experiências digitais com <span class="text-on-surface font-medium">precisão</span> e <span class="text-on-surface font-medium">paixão</span>. Projetando o futuro de interfaces de alta performance.</p>
+<div class="flex flex-wrap gap-6">
+<button class="px-8 py-4 rounded-xl bg-gradient-to-r from-primary to-secondary text-on-primary-container font-label font-bold tracking-wider hover:brightness-110 transition-all shadow-[0_20px_40px_rgba(172,137,255,0.08)]">VER TRABALHOS</button>
+<button class="px-8 py-4 rounded-xl border border-outline-variant/20 text-primary font-label font-bold tracking-wider hover:bg-surface-container-high transition-all">CONTATO</button>
+</div>
+</div>
+<!-- Floating Visual Elements (Asymmetric Depth) -->
+<div class="w-full lg:w-2/5 relative h-[500px] flex items-center justify-center">
+<!-- Abstract 3D Central Object Replacement (Image) -->
+<div class="relative w-72 h-72 lg:w-96 lg:h-96 rounded-full overflow-hidden border border-outline-variant/10 shadow-2xl z-20">
+<img alt="Abstract holographic sphere" class="w-full h-full object-cover" data-alt="Futuristic 3D abstract holographic sphere with glowing cyan and violet neon light ribbons swirling inside a dark void" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_jMZS9aGzAGX-MrvHM8nMGoH8c_CF5Tz3ZEdKE3h1EhZ8x9wXTMdiGcV0OX8yUDqihXuZOZ-jfvNmN6FSCTmXxdwG3ecMCMJkO49SJ88XESvZ6Wz8Ixc_a-TGJK-QgdZAC5B-PrvpEL9l7Rp-JOUo0ncvCgbty8-1rMSiKoBQkfMXlW_vP-sKYIENOJk_pPkF7oqEtswvHJHODCYWHxO7_1croA4V7K9-qSv0JaT4-7hxdmyAEu5Y6xIMpewqI65xhLHzkiKj61w"/>
+<div class="absolute inset-0 glow-overlay"></div>
+</div>
+<!-- Floating Glass Cards -->
+<div class="absolute -top-10 -right-4 w-48 p-4 glass-panel rounded-xl z-30 transform rotate-6 shadow-2xl">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary" data-icon="terminal">terminal</span>
+<span class="font-label text-[10px] tracking-widest text-on-surface-variant uppercase">SYSTEM_01</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-2/3"></div>
+</div>
+<p class="text-[9px] font-label text-primary mt-2">OPTIMIZING PERFORMANCE...</p>
+</div>
+<div class="absolute top-1/2 -left-12 w-56 p-5 glass-panel rounded-xl z-10 transform -rotate-12 shadow-2xl">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-secondary/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-secondary" data-icon="layers">layers</span>
+</div>
+<span class="font-label text-[10px] text-secondary font-bold">LIVE_DATA</span>
+</div>
+<p class="font-headline text-lg text-on-surface">Precision UI</p>
+<p class="text-[10px] text-on-surface-variant leading-tight">Construindo experiências digitais com <span class="text-on-surface font-medium">precisão</span> e <span class="text-on-surface font-medium">paixão</span>. Projetando o futuro de interfaces de alta performance.</p>
+</div>
+<div class="absolute -bottom-6 right-10 w-40 h-40 glass-panel rounded-full z-0 overflow-hidden opacity-50 blur-[2px]">
+<img alt="Geometric light pattern" class="w-full h-full object-cover grayscale brightness-50" data-alt="Ethereal purple and blue light geometric patterns reflecting on a dark chrome surface with depth of field" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWuODDWuBdojcc-8ruoDX8m4cgdUwiNCwr2S0wYfGQslvlK4NR6xJTSz-4-PUCz2w1DIkwUvxSjCZ-scssMX846XYIlN4UVPu6Xmg0J8vc8WwZs7vLsQdUIZYN-dnvZKlmYpPutcugcC3RKHpgWxZuojoVkvxn19hHFScVHyy027LpWGlEbRYXvBqJS9ZRiAJvwHOXypoqnvecBUvAt53s0J2fxpUa20m_OJbZCRieE0luKChpFc5t3GSvlGg20Ohqv9tizH-KprM"/>
+</div>
+</div>
+</section>
+<!-- Bento Grid Skills Preview (Task-Focused Section) -->
+<section class="max-w-7xl mx-auto px-8 py-20">
+<div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-6 h-auto md:h-[400px]">
+<!-- Main Expertise -->
+<div class="md:col-span-2 lg:col-span-3 bg-surface-container-low p-8 rounded-3xl flex flex-col justify-between border border-outline-variant/5">
+<div>
+<span class="font-label text-tertiary tracking-widest text-xs uppercase mb-4 block">ESPECIALIDADES</span>
+<h3 class="font-headline text-4xl font-bold text-on-surface mb-4">Alquimia<br/>Full-Stack</h3>
+</div>
+<p class="text-on-surface-variant font-light">Combinando engenharia robusta com sensibilidade estética de nível editorial.</p>
+</div>
+<!-- Skill Chip Card -->
+<div class="md:col-span-2 lg:col-span-2 bg-surface-container-high p-8 rounded-3xl border border-outline-variant/10">
+<span class="font-label text-secondary tracking-widest text-xs uppercase mb-6 block">TECNOLOGIAS</span>
+<div class="flex flex-wrap gap-2">
+<span class="px-4 py-1 rounded-full bg-surface-container-highest text-primary text-[10px] font-bold tracking-widest shadow-[inset_0_0_8px_rgba(143,245,255,0.1)]">TYPESCRIPT</span>
+<span class="px-4 py-1 rounded-full bg-surface-container-highest text-primary text-[10px] font-bold tracking-widest shadow-[inset_0_0_8px_rgba(143,245,255,0.1)]">REACT</span>
+<span class="px-4 py-1 rounded-full bg-surface-container-highest text-primary text-[10px] font-bold tracking-widest shadow-[inset_0_0_8px_rgba(143,245,255,0.1)]">NEXTJS</span>
+<span class="px-4 py-1 rounded-full bg-surface-container-highest text-primary text-[10px] font-bold tracking-widest shadow-[inset_0_0_8px_rgba(143,245,255,0.1)]">TAILWIND</span>
+<span class="px-4 py-1 rounded-full bg-surface-container-highest text-primary text-[10px] font-bold tracking-widest shadow-[inset_0_0_8px_rgba(143,245,255,0.1)]">PYTHON</span>
+<span class="px-4 py-1 rounded-full bg-surface-container-highest text-primary text-[10px] font-bold tracking-widest shadow-[inset_0_0_8px_rgba(143,245,255,0.1)]">THREE.JS</span>
+</div>
+</div>
+<!-- Status Card -->
+<div class="lg:col-span-1 bg-tertiary/10 p-8 rounded-3xl flex flex-col items-center justify-center border border-tertiary/20">
+<span class="material-symbols-outlined text-tertiary text-4xl mb-2" data-icon="bolt" data-weight="fill" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-headline text-xl font-bold text-on-surface">Disponível</span>
+<span class="font-label text-[10px] text-tertiary/80 uppercase">PARA CONTRATAÇÃO</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-16 mt-32 bg-black border-t border-zinc-800/20 px-12 flex flex-col md:flex-row justify-between items-center gap-8">
+<p class="font-['Manrope'] uppercase tracking-[0.2em] text-[10px] text-zinc-500">© 2024 DIGITAL LUMINARY. ENGINEERED WITH PRECISION.</p>
+<div class="flex gap-8">
+<a class="font-['Manrope'] uppercase tracking-[0.2em] text-[10px] text-zinc-500 hover:text-cyan-400 transition-colors" href="#">GITHUB</a>
+<a class="font-['Manrope'] uppercase tracking-[0.2em] text-[10px] text-zinc-500 hover:text-cyan-400 transition-colors" href="#">LINKEDIN</a>
+<a class="font-['Manrope'] uppercase tracking-[0.2em] text-[10px] text-zinc-500 hover:text-cyan-400 transition-colors" href="#">LAYERS</a>
+<a class="font-['Manrope'] uppercase tracking-[0.2em] text-[10px] text-zinc-500 hover:text-cyan-400 transition-colors" href="#">DRIBBBLE</a>
+</div>
+</footer>
+</body></html>

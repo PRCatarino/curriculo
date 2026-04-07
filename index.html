@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Paulo Catarino | Desenvolvedor Full-Stack & Arquiteto Digital</title>
+<meta name="description" content="Paulo Catarino - Desenvolvedor Full-Stack e Arquiteto Digital. Construindo experiências digitais com precisão e paixão no Rio de Janeiro."/>
+<meta name="robots" content="index, follow"/>
+<meta property="og:title" content="Paulo Catarino | Portfolio"/>
+<meta property="og:description" content="Desenvolvedor Full-Stack & Arquiteto Digital"/>
+<meta property="og:type" content="website"/>
+<meta name="theme-color" content="#0e0e13"/>
+<!-- Security Headers (via meta) -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+<meta http-equiv="X-Frame-Options" content="DENY"/>
+<meta http-equiv="X-XSS-Protection" content="1; mode=block"/>
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()"/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface": "#0e0e13",
+        "surface-container-low": "#131319",
+        "surface-container": "#19191f",
+        "surface-container-high": "#1f1f26",
+        "surface-container-highest": "#25252d",
+        "surface-container-lowest": "#000000",
+        "surface-variant": "#25252d",
+        "surface-bright": "#2c2b33",
+        "on-surface": "#f9f5fd",
+        "on-surface-variant": "#acaab1",
+        "on-background": "#f9f5fd",
+        "background": "#0e0e13",
+        "primary": "#8ff5ff",
+        "primary-dim": "#00deec",
+        "primary-container": "#00eefc",
+        "primary-fixed": "#00eefc",
+        "on-primary": "#005d63",
+        "on-primary-container": "#005359",
+        "secondary": "#ac89ff",
+        "secondary-dim": "#874cff",
+        "secondary-container": "#7000ff",
+        "on-secondary": "#290067",
+        "tertiary": "#ff59e3",
+        "tertiary-dim": "#ff59e3",
+        "tertiary-container": "#ff05e5",
+        "on-tertiary": "#42003a",
+        "error": "#ff6e84",
+        "outline": "#76747b",
+        "outline-variant": "#48474d",
+        "inverse-surface": "#fcf8ff",
+      },
+      borderRadius: {
+        DEFAULT: "0.25rem",
+        lg: "0.5rem",
+        xl: "0.75rem",
+        "2xl": "1rem",
+        "3xl": "1.5rem",
+        full: "9999px",
+      },
+      fontFamily: {
+        headline: ["Space Grotesk", "sans-serif"],
+        body: ["Inter", "sans-serif"],
+        label: ["Manrope", "sans-serif"],
+      },
+    },
+  },
+}
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; overflow-x: hidden; }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+
+  /* Glass Panel */
+  .glass-panel {
+    background: rgba(37, 37, 45, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    position: relative;
+  }
+  .glass-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(45deg, rgba(143, 245, 255, 0.15), rgba(172, 137, 255, 0.15));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .glow-overlay {
+    background: linear-gradient(45deg, rgba(143,245,255,0.15), rgba(172,137,255,0.15));
+  }
+
+  /* 3D Canvas */
+  #hero-canvas {
+    position: absolute;
+    top: 15%;
+    right: 2%;
+    width: 38%;
+    height: 70%;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* 3D Card Effect */
+  .perspective-1000 { perspective: 1000px; }
+  .preserve-3d { transform-style: preserve-3d; }
+  .project-card-3d {
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .project-card-3d:hover {
+    transform: rotateX(5deg) rotateY(-5deg) translateY(-16px);
+    box-shadow: -15px 30px 50px rgba(172, 137, 255, 0.12);
+  }
+
+  /* Neon Glow */
+  .neon-glow-primary { box-shadow: 0 0 20px rgba(143, 245, 255, 0.3); }
+  .neon-glow-secondary { box-shadow: 0 0 20px rgba(172, 137, 255, 0.3); }
+  .neon-glow-tertiary { box-shadow: 0 0 20px rgba(255, 89, 227, 0.3); }
+
+  /* Ambient Shadows */
+  .ambient-shadow {
+    box-shadow: 0 20px 40px rgba(172, 137, 255, 0.08);
+  }
+
+  /* Skill Bar Glow */
+  .skill-bar-glow {
+    box-shadow: 0 0 10px rgba(143, 245, 255, 0.5);
+  }
+
+  /* Chip Inner Glow */
+  .chip-glow {
+    box-shadow: inset 0 0 8px rgba(143, 245, 255, 0.1);
+  }
+
+  /* Timeline dot pulse */
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 10px currentColor; }
+    50% { box-shadow: 0 0 25px currentColor; }
+  }
+  .timeline-dot { animation: pulse-glow 2s ease-in-out infinite; }
+
+  /* Hero reveal (separate from scroll reveal to avoid conflicts) */
+  .hero-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  /* Scroll reveal base */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  /* Mobile Nav */
+  .mobile-menu {
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .mobile-menu.active {
+    transform: translateX(0);
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #0e0e13; }
+  ::-webkit-scrollbar-thumb { background: #25252d; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #48474d; }
+
+  /* Form fields */
+  input, textarea, select {
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+  }
+  select option {
+    background: #1f1f26;
+    color: #f9f5fd;
+    padding: 12px;
+  }
+
+  /* Floating animation for hero elements */
+  @keyframes float {
+    0%, 100% { transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--rot, 0deg)); }
+    50% { transform: translate(var(--dx, 0px), calc(var(--dy, 0px) - 12px)) rotate(var(--rot, 0deg)); }
+  }
+  .float-1 { --rot: 6deg; --dx: 0px; --dy: 0px; animation: float 5s ease-in-out infinite; }
+  .float-2 { --rot: -12deg; --dx: 0px; --dy: 0px; animation: float 6s ease-in-out infinite 0.5s; }
+  .float-3 { --rot: 3deg; --dx: 0px; --dy: 0px; animation: float 7s ease-in-out infinite 1s; }
+
+  /* Draggable cards */
+  .draggable-card {
+    transition: box-shadow 0.3s ease, transform 0.1s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+  }
+  .draggable-card.dragging {
+    animation: none !important;
+    z-index: 50 !important;
+    cursor: grabbing !important;
+    box-shadow: 0 25px 50px rgba(143, 245, 255, 0.15), 0 0 30px rgba(172, 137, 255, 0.1);
+    transform: scale(1.05);
+  }
+  .draggable-card:hover:not(.dragging) {
+    box-shadow: 0 20px 40px rgba(143, 245, 255, 0.1);
+  }
+
+  /* Particle canvas */
+  #particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  /* Nav active indicator */
+  .nav-link.active {
+    color: #8ff5ff;
+    border-bottom: 2px solid #8ff5ff;
+    padding-bottom: 4px;
+  }
+
+  /* Gradient text helper */
+  .gradient-text {
+    background: linear-gradient(135deg, #8ff5ff, #ac89ff, #ff59e3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+</style>
+</head>
+
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+
+<!-- ========== PARTICLE BACKGROUND ========== -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- ========== NAVIGATION ========== -->
+<nav id="main-nav" class="fixed top-0 w-full z-50 transition-all duration-500" style="background: rgba(14,14,19,0.6); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);">
+  <div class="flex justify-between items-center px-6 md:px-8 py-4 max-w-7xl mx-auto w-full">
+    <a href="#hero" class="text-2xl font-bold tracking-tighter text-on-surface font-headline hover:text-primary transition-colors">PC<span class="text-primary">.</span></a>
+    <div class="hidden md:flex items-center space-x-10">
+      <a href="#hero" class="nav-link font-headline tracking-tight text-on-surface-variant hover:text-on-surface transition-colors text-sm">INÍCIO</a>
+      <a href="#about" class="nav-link font-headline tracking-tight text-on-surface-variant hover:text-on-surface transition-colors text-sm">SOBRE</a>
+      <a href="#tech" class="nav-link font-headline tracking-tight text-on-surface-variant hover:text-on-surface transition-colors text-sm">TECNOLOGIAS</a>
+      <a href="#contact" class="nav-link font-headline tracking-tight text-on-surface-variant hover:text-on-surface transition-colors text-sm">CONTATO</a>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="#contact" class="hidden md:inline-flex px-6 py-2.5 rounded-xl bg-gradient-to-r from-primary to-secondary text-on-primary-container font-label text-xs font-bold tracking-wider hover:brightness-110 transition-all ambient-shadow">BAIXAR CV</a>
+      <button id="mobile-toggle" class="md:hidden text-on-surface" aria-label="Menu">
+        <span class="material-symbols-outlined text-2xl">menu</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-72 h-full z-[60] bg-surface-container/95 backdrop-blur-2xl flex flex-col pt-20 px-8 gap-6">
+  <button id="mobile-close" class="absolute top-5 right-5 text-on-surface-variant hover:text-on-surface transition-colors">
+    <span class="material-symbols-outlined text-2xl">close</span>
+  </button>
+  <a href="#hero" class="font-headline text-xl text-on-surface hover:text-primary transition-colors mobile-link">INÍCIO</a>
+  <a href="#about" class="font-headline text-xl text-on-surface hover:text-primary transition-colors mobile-link">SOBRE</a>
+  <a href="#tech" class="font-headline text-xl text-on-surface hover:text-primary transition-colors mobile-link">TECNOLOGIAS</a>
+  <a href="#contact" class="font-headline text-xl text-on-surface hover:text-primary transition-colors mobile-link">CONTATO</a>
+  <div class="mt-auto mb-8">
+    <a href="#contact" class="block text-center px-6 py-3 rounded-xl bg-gradient-to-r from-primary to-secondary text-on-primary-container font-label text-xs font-bold tracking-wider">BAIXAR CV</a>
+  </div>
+</div>
+<div id="mobile-overlay" class="fixed inset-0 bg-black/50 z-[55] hidden"></div>
+
+<!-- ========== HERO SECTION ========== -->
+<section id="hero" class="relative min-h-screen overflow-hidden pt-20 flex items-start">
+  <!-- Background Orbs -->
+  <div class="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
+  <div class="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-secondary/10 blur-[150px] rounded-full pointer-events-none"></div>
+
+  <!-- Three.js Canvas -->
+  <canvas id="hero-canvas" class="hidden lg:block" style="pointer-events: none;"></canvas>
+
+  <div class="relative max-w-7xl mx-auto px-6 md:px-8 pt-8 lg:pt-4 pb-12 flex flex-col lg:flex-row items-start gap-12 w-full z-10">
+    <!-- Hero Text -->
+    <div class="w-full lg:w-3/5">
+      <div class="mb-6 hero-reveal">
+        <span class="font-label text-primary tracking-[0.3em] text-[10px] uppercase font-bold">Desenvolvedor Full-Stack & Arquiteto Digital</span>
+      </div>
+      <h1 class="font-headline text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-on-surface mb-6 leading-[0.9] hero-reveal">
+        PAULO<br/>
+        <span class="gradient-text">CATARINO</span>
+      </h1>
+      <p class="text-on-surface-variant text-lg md:text-xl lg:text-2xl max-w-xl font-light mb-10 leading-relaxed hero-reveal">
+        Construindo experiências digitais com <span class="text-on-surface font-medium">precisão</span> e <span class="text-on-surface font-medium">paixão</span>. Projetando o futuro de interfaces de alta performance.
+      </p>
+      <div class="flex flex-wrap gap-4 hero-reveal">
+        <a href="https://github.com/PRCatarino" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-xl bg-gradient-to-r from-primary to-secondary text-on-primary-container font-label font-bold tracking-wider text-sm hover:brightness-110 transition-all ambient-shadow">VER GITHUB</a>
+        <a href="#contact" class="px-8 py-4 rounded-xl border border-outline-variant/20 text-primary font-label font-bold tracking-wider text-sm hover:bg-surface-container-high transition-all">CONTATO</a>
+      </div>
+    </div>
+
+    <!-- Floating Glass Cards (all screens) -->
+    <div class="w-full lg:w-2/5 relative h-[350px] lg:h-[520px] flex items-center justify-center">
+      <!-- Central orb (mobile only, desktop uses Three.js) -->
+      <div class="relative w-56 h-56 sm:w-72 sm:h-72 rounded-full overflow-hidden border border-outline-variant/10 shadow-2xl z-20 reveal-scale lg:hidden">
+        <div class="w-full h-full bg-gradient-to-br from-primary/20 via-secondary/20 to-tertiary/20 flex items-center justify-center">
+          <span class="font-headline text-6xl font-bold gradient-text">PC</span>
+        </div>
+        <div class="absolute inset-0 glow-overlay"></div>
+      </div>
+
+      <!-- Floating card 1: System Status -->
+      <div class="draggable-card absolute -top-2 lg:top-4 right-2 lg:right-0 w-44 lg:w-52 p-3 lg:p-4 glass-panel rounded-xl z-30 float-1 ambient-shadow" style="cursor: grab;">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="material-symbols-outlined text-primary text-sm">terminal</span>
+          <span class="font-label text-[9px] tracking-widest text-on-surface-variant uppercase">SYSTEM_01</span>
+        </div>
+        <div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+          <div class="h-full bg-primary w-3/4 skill-bar-glow"></div>
+        </div>
+        <p class="text-[8px] font-label text-primary mt-1.5">COMPILANDO INOVAÇÃO...</p>
+      </div>
+
+      <!-- Floating card 2: Stack Info -->
+      <div class="draggable-card absolute bottom-8 lg:bottom-12 -left-2 lg:left-0 w-48 lg:w-56 p-4 lg:p-5 glass-panel rounded-xl z-30 float-2 ambient-shadow" style="cursor: grab;">
+        <div class="flex justify-between items-start mb-3">
+          <div class="bg-secondary/20 p-1.5 rounded-lg"><span class="material-symbols-outlined text-secondary text-sm">layers</span></div>
+          <span class="font-label text-[9px] text-secondary font-bold">LIVE</span>
+        </div>
+        <p class="font-headline text-sm text-on-surface font-bold">Full-Stack Dev</p>
+        <p class="text-[9px] text-on-surface-variant leading-snug">React, Next.js, .NET, Python e muito mais.</p>
+      </div>
+
+      <!-- Floating card 3: Projects count (desktop only) -->
+      <div class="draggable-card hidden lg:block absolute top-1/2 -translate-y-1/2 -left-16 w-40 p-4 glass-panel rounded-xl z-30 float-3 ambient-shadow" style="cursor: grab;">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">folder_special</span>
+          <span class="font-label text-[9px] tracking-widest text-on-surface-variant uppercase">PROJETOS</span>
+        </div>
+        <p class="font-headline text-3xl font-bold gradient-text">30+</p>
+        <p class="text-[8px] font-label text-on-surface-variant mt-1">ENTREGUES COM SUCESSO</p>
+      </div>
+
+      <!-- Floating card 4: Status badge (desktop only) -->
+      <div class="draggable-card hidden lg:flex absolute -bottom-2 right-8 w-48 p-4 glass-panel rounded-xl z-30 float-1 ambient-shadow items-center gap-3" style="cursor: grab;">
+        <div class="w-3 h-3 bg-primary rounded-full animate-pulse neon-glow-primary flex-shrink-0"></div>
+        <div>
+          <p class="font-label text-[9px] tracking-widest text-primary uppercase font-bold">DISPONÍVEL</p>
+          <p class="text-[8px] text-on-surface-variant">Para novos projetos</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 animate-bounce">
+    <span class="font-label text-[9px] tracking-widest text-on-surface-variant/50 uppercase">SCROLL</span>
+    <span class="material-symbols-outlined text-primary/50 text-xl">expand_more</span>
+  </div>
+</section>
+
+<!-- ========== BENTO SKILLS PREVIEW ========== -->
+<section class="max-w-7xl mx-auto px-6 md:px-8 py-16 relative z-10">
+  <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-5">
+    <!-- Especialidades -->
+    <div class="md:col-span-2 lg:col-span-3 bg-surface-container-low p-8 rounded-3xl flex flex-col justify-between border border-outline-variant/5 reveal">
+      <div>
+        <span class="font-label text-tertiary tracking-widest text-xs uppercase mb-4 block">ESPECIALIDADES</span>
+        <h3 class="font-headline text-3xl md:text-4xl font-bold text-on-surface mb-4">Alquimia<br/>Full-Stack</h3>
+      </div>
+      <p class="text-on-surface-variant font-light">Combinando engenharia robusta com sensibilidade estética de nível editorial.</p>
+    </div>
+    <!-- Tecnologias -->
+    <div class="md:col-span-2 lg:col-span-2 bg-surface-container-high p-8 rounded-3xl border border-outline-variant/10 reveal">
+      <span class="font-label text-secondary tracking-widest text-xs uppercase mb-6 block">TECNOLOGIAS</span>
+      <div class="flex flex-wrap gap-2">
+        <span class="px-4 py-1.5 rounded-full bg-surface-container-highest text-primary text-[10px] font-bold tracking-widest chip-glow">TYPESCRIPT</span>
+        <span class="px-4 py-1.5 rounded-full bg-surface-container-highest text-primary text-[10px] font-bold tracking-widest chip-glow">REACT</span>
+        <span class="px-4 py-1.5 rounded-full bg-surface-container-highest text-primary text-[10px] font-bold tracking-widest chip-glow">NEXT.JS</span>
+        <span class="px-4 py-1.5 rounded-full bg-surface-container-highest text-primary text-[10px] font-bold tracking-widest chip-glow">TAILWIND</span>
+        <span class="px-4 py-1.5 rounded-full bg-surface-container-highest text-primary text-[10px] font-bold tracking-widest chip-glow">PYTHON</span>
+        <span class="px-4 py-1.5 rounded-full bg-surface-container-highest text-primary text-[10px] font-bold tracking-widest chip-glow">C# .NET</span>
+        <span class="px-4 py-1.5 rounded-full bg-surface-container-highest text-primary text-[10px] font-bold tracking-widest chip-glow">THREE.JS</span>
+        <span class="px-4 py-1.5 rounded-full bg-surface-container-highest text-primary text-[10px] font-bold tracking-widest chip-glow">NODE.JS</span>
+      </div>
+    </div>
+    <!-- Status -->
+    <div class="lg:col-span-1 bg-tertiary/10 p-8 rounded-3xl flex flex-col items-center justify-center border border-tertiary/20 reveal">
+      <span class="material-symbols-outlined text-tertiary text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">bolt</span>
+      <span class="font-headline text-xl font-bold text-on-surface">Disponível</span>
+      <span class="font-label text-[10px] text-tertiary/80 uppercase text-center">PARA PROJETOS</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ABOUT SECTION ========== -->
+<section id="about" class="max-w-7xl mx-auto px-6 md:px-8 py-20 lg:py-32 relative z-10">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <div class="lg:col-span-7 space-y-8">
+      <div class="inline-block px-3 py-1 bg-surface-container-highest rounded-full border border-outline-variant/20 reveal">
+        <span class="font-label text-[10px] tracking-[0.2em] text-secondary font-extrabold uppercase">GÊNESE & VISÃO</span>
+      </div>
+      <h2 class="font-headline text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-none reveal">
+        Arquitetando <span class="text-primary italic">Soberania</span> Digital.
+      </h2>
+      <p class="text-lg md:text-xl text-on-surface-variant max-w-2xl leading-relaxed reveal">
+        Apaixonado por tecnologia desde 2019, nunca parei de estudar e me aperfeiçoar. Desenvolvedor Full-Stack na <span class="text-on-surface font-medium">Zap Sistemas</span>, uno engenharia robusta com estética centrada no ser humano — criando sistemas que vão de APIs com C# .NET a interfaces imersivas com React e Next.js.
+      </p>
+      <div class="flex gap-8 reveal">
+        <div class="flex flex-col">
+          <span class="text-4xl font-headline font-bold text-tertiary">6+</span>
+          <span class="font-label text-[10px] tracking-widest text-on-surface-variant">ANOS DE EXP.</span>
+        </div>
+        <div class="w-px h-14 bg-outline-variant/30 self-center"></div>
+        <div class="flex flex-col">
+          <span class="text-4xl font-headline font-bold text-primary">30+</span>
+          <span class="font-label text-[10px] tracking-widest text-on-surface-variant">PROJETOS ENTREGUES</span>
+        </div>
+        <div class="w-px h-14 bg-outline-variant/30 self-center"></div>
+        <div class="flex flex-col">
+          <span class="text-4xl font-headline font-bold text-secondary">∞</span>
+          <span class="font-label text-[10px] tracking-widest text-on-surface-variant">PAIXÃO POR CÓDIGO</span>
+        </div>
+      </div>
+    </div>
+    <div class="lg:col-span-5 relative group reveal-scale">
+      <div class="absolute -inset-4 bg-gradient-to-r from-primary/20 to-secondary/20 blur-3xl opacity-50 group-hover:opacity-80 transition-opacity duration-500"></div>
+      <div class="relative glass-panel rounded-3xl overflow-hidden aspect-square">
+        <img src="profile.jpg" alt="Paulo Catarino" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TECH ARSENAL ========== -->
+<section id="tech" class="max-w-7xl mx-auto px-6 md:px-8 py-20 relative z-10">
+  <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+    <div class="reveal">
+      <h2 class="font-headline text-4xl md:text-5xl font-bold tracking-tight mb-2 uppercase">ARSENAL TÉCNICO</h2>
+      <p class="text-on-surface-variant">Projetado para precisão e escalabilidade.</p>
+    </div>
+    <div class="font-label text-xs tracking-widest text-secondary flex items-center gap-2 reveal">
+      <span class="w-8 h-px bg-secondary"></span> CAPACIDADES PRINCIPAIS
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+    <!-- Front-End -->
+    <div class="md:col-span-2 glass-panel p-8 rounded-3xl group hover:bg-surface-variant/40 transition-all reveal">
+      <div class="flex justify-between items-start mb-10">
+        <span class="material-symbols-outlined text-4xl text-primary">terminal</span>
+        <span class="font-label text-[10px] text-on-surface-variant">01 // FRONT-END</span>
+      </div>
+      <h3 class="font-headline text-2xl font-bold mb-6">Engenharia Front-End</h3>
+      <div class="space-y-4">
+        <div class="space-y-2">
+          <div class="flex justify-between text-xs font-label"><span>REACT / NEXT.JS</span><span>95%</span></div>
+          <div class="h-1 bg-surface-container-lowest rounded-full overflow-hidden">
+            <div class="h-full bg-primary rounded-full skill-bar-glow" style="width:95%"></div>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between text-xs font-label"><span>TYPESCRIPT</span><span>90%</span></div>
+          <div class="h-1 bg-surface-container-lowest rounded-full overflow-hidden">
+            <div class="h-full bg-primary rounded-full skill-bar-glow" style="width:90%"></div>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between text-xs font-label"><span>TAILWIND CSS</span><span>92%</span></div>
+          <div class="h-1 bg-surface-container-lowest rounded-full overflow-hidden">
+            <div class="h-full bg-primary rounded-full skill-bar-glow" style="width:92%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back-End & Design -->
+    <div class="md:col-span-2 glass-panel p-8 rounded-3xl group hover:bg-surface-variant/40 transition-all reveal">
+      <div class="flex justify-between items-start mb-10">
+        <span class="material-symbols-outlined text-4xl text-secondary">auto_awesome</span>
+        <span class="font-label text-[10px] text-on-surface-variant">02 // BACK-END</span>
+      </div>
+      <h3 class="font-headline text-2xl font-bold mb-6">Engenharia Back-End</h3>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-surface-container-highest px-4 py-3 rounded-xl border border-outline-variant/10 text-xs font-label text-center">C# .NET</div>
+        <div class="bg-surface-container-highest px-4 py-3 rounded-xl border border-outline-variant/10 text-xs font-label text-center">NODE.JS</div>
+        <div class="bg-surface-container-highest px-4 py-3 rounded-xl border border-outline-variant/10 text-xs font-label text-center">PYTHON</div>
+        <div class="bg-surface-container-highest px-4 py-3 rounded-xl border border-outline-variant/10 text-xs font-label text-center">SQL / NoSQL</div>
+      </div>
+    </div>
+
+    <!-- Cloud & DevOps -->
+    <div class="md:col-span-4 glass-panel p-8 rounded-3xl flex flex-col md:flex-row gap-8 items-center justify-between border-t border-primary/10 reveal">
+      <div class="flex items-center gap-6">
+        <div class="w-16 h-16 rounded-full bg-tertiary/10 flex items-center justify-center">
+          <span class="material-symbols-outlined text-tertiary text-3xl">cloud_done</span>
+        </div>
+        <div>
+          <h4 class="font-headline text-xl font-bold">Ferramentas & DevOps</h4>
+          <p class="text-sm text-on-surface-variant">Git, Docker, CI/CD, APIs RESTful e mais.</p>
+        </div>
+      </div>
+      <div class="flex -space-x-4">
+        <div class="w-12 h-12 rounded-full border-2 border-background bg-surface-container-high flex items-center justify-center font-label text-[10px] font-bold">GIT</div>
+        <div class="w-12 h-12 rounded-full border-2 border-background bg-surface-container-high flex items-center justify-center font-label text-[10px] font-bold">API</div>
+        <div class="w-12 h-12 rounded-full border-2 border-background bg-surface-container-high flex items-center justify-center font-label text-[10px] font-bold">SQL</div>
+        <div class="w-12 h-12 rounded-full border-2 border-background bg-surface-container-high flex items-center justify-center font-label text-[10px] font-bold">REST</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== EXPERIENCE TIMELINE ========== -->
+<section id="experience" class="max-w-7xl mx-auto px-6 md:px-8 py-20 lg:py-32 relative z-10">
+  <div class="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-outline-variant/30 to-transparent hidden lg:block"></div>
+  <div class="text-center mb-20 reveal">
+    <h2 class="font-headline text-4xl md:text-5xl font-bold tracking-tight uppercase">LEGADO <span class="text-secondary">&</span> TRAJETÓRIA</h2>
+    <p class="text-on-surface-variant mt-4">Minha jornada pelo cenário tecnológico.</p>
+  </div>
+
+  <div class="space-y-24 lg:space-y-32">
+    <!-- Step 1 -->
+    <div class="relative flex flex-col lg:flex-row items-center gap-8 lg:gap-12 group">
+      <div class="lg:w-1/2 lg:text-right order-2 lg:order-1 reveal-left">
+        <div class="glass-panel p-8 rounded-3xl transform group-hover:-translate-y-2 transition-transform duration-500 ambient-shadow">
+          <span class="font-label text-[10px] tracking-widest text-primary mb-2 block">ATUAL</span>
+          <h3 class="font-headline text-2xl md:text-3xl font-bold text-on-surface mb-2">Desenvolvedor Full-Stack</h3>
+          <p class="text-secondary text-lg mb-4 font-medium">ZAP SISTEMAS</p>
+          <p class="text-on-surface-variant leading-relaxed text-sm">Desenvolvimento de soluções tecnológicas integradas, desde interfaces modernas com React e Next.js até APIs robustas com C# .NET. Criando sistemas que impulsionam negócios.</p>
+        </div>
+      </div>
+      <div class="hidden lg:flex absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary z-10 border-4 border-background timeline-dot" style="color: #8ff5ff;"></div>
+      <div class="lg:w-1/2 order-1 lg:order-2 px-8">
+        <div class="font-headline text-7xl lg:text-8xl font-black text-white/5 select-none">01</div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="relative flex flex-col lg:flex-row items-center gap-8 lg:gap-12 group">
+      <div class="lg:w-1/2 order-1 lg:order-1 px-8 lg:text-right">
+        <div class="font-headline text-7xl lg:text-8xl font-black text-white/5 select-none">02</div>
+      </div>
+      <div class="hidden lg:flex absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-secondary z-10 border-4 border-background timeline-dot" style="color: #ac89ff;"></div>
+      <div class="lg:w-1/2 order-2 lg:order-2 reveal-right">
+        <div class="glass-panel p-8 rounded-3xl transform group-hover:-translate-y-2 transition-transform duration-500 ambient-shadow">
+          <span class="font-label text-[10px] tracking-widest text-secondary mb-2 block">PROJETOS FREELANCE</span>
+          <h3 class="font-headline text-2xl md:text-3xl font-bold text-on-surface mb-2">Desenvolvedor Criativo</h3>
+          <p class="text-secondary text-lg mb-4 font-medium">FREELANCER</p>
+          <p class="text-on-surface-variant leading-relaxed text-sm">Desenvolvimento de experiências web imersivas para diversos clientes. Especializado em e-commerce, sistemas de gestão e plataformas digitais com interfaces de alta fidelidade.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="relative flex flex-col lg:flex-row items-center gap-8 lg:gap-12 group">
+      <div class="lg:w-1/2 lg:text-right order-2 lg:order-1 reveal-left">
+        <div class="glass-panel p-8 rounded-3xl transform group-hover:-translate-y-2 transition-transform duration-500 ambient-shadow">
+          <span class="font-label text-[10px] tracking-widest text-tertiary mb-2 block">FORMAÇÃO</span>
+          <h3 class="font-headline text-2xl md:text-3xl font-bold text-on-surface mb-2">Análise e Desenvolvimento de Sistemas</h3>
+          <p class="text-tertiary text-lg mb-4 font-medium">PUC MINAS</p>
+          <p class="text-on-surface-variant leading-relaxed text-sm">Fundamentos sólidos em engenharia de software, estruturas de dados, algoritmos e arquitetura de sistemas. Base teórica que potencializa cada linha de código.</p>
+        </div>
+      </div>
+      <div class="hidden lg:flex absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-tertiary z-10 border-4 border-background timeline-dot" style="color: #ff59e3;"></div>
+      <div class="lg:w-1/2 order-1 lg:order-2 px-8">
+        <div class="font-headline text-7xl lg:text-8xl font-black text-white/5 select-none">03</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA SECTION ========== -->
+<section id="portfolio" class="max-w-7xl mx-auto px-6 md:px-8 py-20 lg:py-32 relative z-10">
+  <div class="text-center py-24 md:py-32 bg-surface-container-low rounded-[3rem] md:rounded-[4rem] relative overflow-hidden reveal-scale">
+    <div class="absolute inset-0 bg-gradient-to-tr from-primary/5 to-secondary/5"></div>
+    <div class="relative z-10 px-6">
+      <h2 class="font-headline text-4xl md:text-6xl lg:text-7xl font-bold mb-10 tracking-tight">PRONTO PARA CONSTRUIR<br/>O FUTURO?</h2>
+      <div class="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
+        <a href="#contact" class="bg-gradient-to-r from-primary to-secondary text-on-primary-container font-label font-bold tracking-widest px-10 py-5 rounded-full hover:scale-105 active:scale-95 transition-all ambient-shadow text-sm">INICIAR PROJETO</a>
+        <a href="https://github.com/PRCatarino" target="_blank" rel="noopener noreferrer" id="github-link" class="border border-outline-variant/30 text-on-surface font-label font-bold tracking-widest px-10 py-5 rounded-full hover:bg-surface-variant transition-all text-sm">VER GITHUB</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CONTACT SECTION ========== -->
+<section id="contact" class="max-w-7xl mx-auto px-6 md:px-8 py-20 lg:py-32 relative z-10">
+  <!-- Background Orbs -->
+  <div class="fixed top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+  <div class="fixed bottom-[10%] left-[-5%] w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+
+  <div class="grid lg:grid-cols-2 gap-16 lg:gap-20 items-start">
+    <!-- Content Side -->
+    <div class="space-y-10">
+      <div class="reveal">
+        <h4 class="font-label text-primary tracking-[0.3em] text-sm mb-4 uppercase">DISPONÍVEL PARA PROJETOS</h4>
+        <h2 class="font-headline text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9]">
+          Vamos Trabalhar<br/><span class="gradient-text">Juntos</span>
+        </h2>
+        <p class="text-on-surface-variant text-lg mt-6 max-w-md leading-relaxed">Tem uma ideia inovadora? Sou especialista em unir estética de alto nível e excelência técnica. Vamos criar algo extraordinário.</p>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="space-y-4 reveal">
+        <a id="email-link" href="#" class="flex items-center gap-4 text-on-surface-variant hover:text-primary transition-colors group" onclick="return false;">
+          <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+            <span class="material-symbols-outlined text-primary text-xl">mail</span>
+          </div>
+          <span id="email-display" class="font-body text-sm">carregando...</span>
+        </a>
+        <a id="phone-link" href="#" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 text-on-surface-variant hover:text-primary transition-colors group" onclick="return false;">
+          <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+            <span class="material-symbols-outlined text-secondary text-xl">phone_iphone</span>
+          </div>
+          <span id="phone-display" class="font-body text-sm">carregando...</span>
+        </a>
+        <div class="flex items-center gap-4 text-on-surface-variant group">
+          <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center">
+            <span class="material-symbols-outlined text-tertiary text-xl">location_on</span>
+          </div>
+          <span class="font-body text-sm">Rio de Janeiro, RJ — Brasil</span>
+        </div>
+      </div>
+
+      <!-- Social Links -->
+      <div class="space-y-4 reveal">
+        <p class="font-label text-[10px] tracking-[0.2em] text-on-surface-variant uppercase">REDES & SOCIAL</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="https://www.linkedin.com/in/paulo-catarino/" target="_blank" rel="noopener noreferrer" class="glass-panel group flex items-center gap-3 px-5 py-3 rounded-xl hover:scale-105 transition-all duration-300">
+            <span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors">link</span>
+            <span class="font-label text-xs font-bold tracking-widest">LINKEDIN</span>
+          </a>
+          <a href="https://github.com/PRCatarino" id="github-social" target="_blank" rel="noopener noreferrer" class="glass-panel group flex items-center gap-3 px-5 py-3 rounded-xl hover:scale-105 transition-all duration-300">
+            <span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors">code</span>
+            <span class="font-label text-xs font-bold tracking-widest">GITHUB</span>
+          </a>
+          <a id="whatsapp-social" href="#" target="_blank" rel="noopener noreferrer" class="glass-panel group flex items-center gap-3 px-5 py-3 rounded-xl hover:scale-105 transition-all duration-300">
+            <span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors">chat</span>
+            <span class="font-label text-xs font-bold tracking-widest">WHATSAPP</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Location Visual -->
+      <div class="hidden lg:block relative w-full h-48 rounded-3xl overflow-hidden glass-panel group reveal">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-50"></div>
+        <div class="w-full h-full bg-gradient-to-br from-surface-container via-surface-container-high to-surface-container flex items-center justify-center">
+          <div class="flex items-center gap-4 px-6 py-3 glass-panel rounded-full">
+            <div class="w-3 h-3 bg-primary rounded-full animate-pulse neon-glow-primary"></div>
+            <span class="font-label text-[10px] tracking-widest uppercase">LOCALIZAÇÃO: RIO DE JANEIRO, RJ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Side -->
+    <div class="glass-panel p-8 md:p-12 lg:p-14 rounded-[2rem] md:rounded-[2.5rem] ambient-shadow reveal-right">
+      <form id="contact-form" class="space-y-8" onsubmit="return handleSubmit(event)" autocomplete="off">
+        <!-- Honeypot - invisible to users, bots fill this -->
+        <div style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;overflow:hidden;" aria-hidden="true" tabindex="-1">
+          <label for="website">Deixe em branco</label>
+          <input type="text" name="website" id="website" tabindex="-1" autocomplete="off"/>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div class="space-y-2 group">
+            <label class="font-label text-[10px] tracking-widest text-on-surface-variant uppercase ml-3 group-focus-within:text-primary transition-colors">NOME COMPLETO</label>
+            <div class="relative">
+              <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant/50 text-lg group-focus-within:text-primary transition-colors">person</span>
+              <input class="w-full bg-surface-container-high/60 border border-outline-variant/15 text-on-surface placeholder:text-outline/40 py-4 pl-12 pr-4 rounded-2xl transition-all duration-300 focus:border-primary/50 focus:bg-surface-container-high focus:shadow-[0_0_20px_rgba(143,245,255,0.08)] hover:border-outline-variant/30" placeholder="Seu Nome" type="text" required maxlength="100" pattern="[A-Za-zÀ-ÿ\s\-'.]{2,100}"/>
+            </div>
+          </div>
+          <div class="space-y-2 group">
+            <label class="font-label text-[10px] tracking-widest text-on-surface-variant uppercase ml-3 group-focus-within:text-primary transition-colors">E-MAIL</label>
+            <div class="relative">
+              <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant/50 text-lg group-focus-within:text-primary transition-colors">mail</span>
+              <input class="w-full bg-surface-container-high/60 border border-outline-variant/15 text-on-surface placeholder:text-outline/40 py-4 pl-12 pr-4 rounded-2xl transition-all duration-300 focus:border-primary/50 focus:bg-surface-container-high focus:shadow-[0_0_20px_rgba(143,245,255,0.08)] hover:border-outline-variant/30" placeholder="exemplo@email.com" type="email" required maxlength="254"/>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-2 group">
+          <label class="font-label text-[10px] tracking-widest text-on-surface-variant uppercase ml-3 group-focus-within:text-secondary transition-colors">TIPO DE PROJETO</label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant/50 text-lg group-focus-within:text-secondary transition-colors">category</span>
+            <select class="w-full bg-surface-container-high/60 border border-outline-variant/15 text-on-surface py-4 pl-12 pr-10 rounded-2xl transition-all duration-300 focus:border-secondary/50 focus:bg-surface-container-high focus:shadow-[0_0_20px_rgba(172,137,255,0.08)] hover:border-outline-variant/30 appearance-none cursor-pointer">
+              <option>Aplicação Web</option>
+              <option>Sistema de Gestão</option>
+              <option>E-commerce</option>
+              <option>Landing Page</option>
+              <option>Consultoria Técnica</option>
+              <option>Outro</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline-variant/50 text-lg pointer-events-none">expand_more</span>
+          </div>
+        </div>
+        <div class="space-y-2 group">
+          <label class="font-label text-[10px] tracking-widest text-on-surface-variant uppercase ml-3 group-focus-within:text-tertiary transition-colors">SUA MENSAGEM</label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-4 top-4 text-outline-variant/50 text-lg group-focus-within:text-tertiary transition-colors">edit_note</span>
+            <textarea class="w-full bg-surface-container-high/60 border border-outline-variant/15 text-on-surface placeholder:text-outline/40 py-4 pl-12 pr-4 rounded-2xl transition-all duration-300 focus:border-tertiary/50 focus:bg-surface-container-high focus:shadow-[0_0_20px_rgba(255,89,227,0.08)] hover:border-outline-variant/30 resize-none" placeholder="Descreva brevemente sua visão..." rows="4" required maxlength="1000"></textarea>
+          </div>
+        </div>
+        <div class="pt-2">
+          <button type="submit" class="w-full group relative overflow-hidden bg-gradient-to-r from-primary via-secondary to-tertiary p-[2px] rounded-2xl transition-all hover:shadow-[0_0_30px_rgba(143,245,255,0.15)] active:scale-[0.98]">
+            <div class="bg-surface-container-high group-hover:bg-transparent transition-colors duration-500 py-5 rounded-[14px] flex items-center justify-center gap-3">
+              <span class="font-headline font-bold text-lg tracking-tight text-on-surface group-hover:text-surface-container-lowest transition-colors duration-500">INICIAR CONEXÃO</span>
+              <span class="material-symbols-outlined text-primary group-hover:text-surface-container-lowest transition-colors duration-500">rocket_launch</span>
+            </div>
+          </button>
+        </div>
+        <p id="form-status" class="text-center font-label text-[10px] text-on-surface-variant tracking-widest opacity-60">TEMPO DE RESPOSTA: GERALMENTE EM ATÉ 24 HORAS</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="w-full py-12 md:py-16 mt-20 bg-surface-container-lowest border-t border-outline-variant/10 relative z-10">
+  <div class="flex flex-col md:flex-row justify-between items-center px-6 md:px-12 max-w-7xl mx-auto gap-6">
+    <p class="font-label uppercase tracking-[0.2em] text-[10px] text-outline order-2 md:order-1">&copy; 2026 PAULO CATARINO. PROJETADO COM PRECISÃO.</p>
+    <div class="flex items-center space-x-8 order-1 md:order-2">
+      <a href="https://github.com/PRCatarino" id="github-footer" target="_blank" rel="noopener noreferrer" class="font-label uppercase tracking-[0.2em] text-[10px] text-outline hover:text-primary transition-colors">GITHUB</a>
+      <a href="https://www.linkedin.com/in/paulo-catarino/" target="_blank" rel="noopener noreferrer" class="font-label uppercase tracking-[0.2em] text-[10px] text-outline hover:text-primary transition-colors">LINKEDIN</a>
+      <a id="email-footer" href="#" class="font-label uppercase tracking-[0.2em] text-[10px] text-outline hover:text-primary transition-colors">EMAIL</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== SCRIPTS ========== -->
+<script>
+// ==========================================
+// MOBILE MENU
+// ==========================================
+const mobileToggle = document.getElementById('mobile-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileClose = document.getElementById('mobile-close');
+const mobileOverlay = document.getElementById('mobile-overlay');
+const mobileLinks = document.querySelectorAll('.mobile-link');
+
+function openMenu() {
+  mobileMenu.classList.add('active');
+  mobileOverlay.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+function closeMenu() {
+  mobileMenu.classList.remove('active');
+  mobileOverlay.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+mobileToggle.addEventListener('click', openMenu);
+mobileClose.addEventListener('click', closeMenu);
+mobileOverlay.addEventListener('click', closeMenu);
+mobileLinks.forEach(l => l.addEventListener('click', closeMenu));
+
+// ==========================================
+// NAV ACTIVE STATE & SCROLL EFFECTS
+// ==========================================
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('main-nav');
+  if (window.scrollY > 100) {
+    nav.style.background = 'rgba(14,14,19,0.85)';
+    nav.style.boxShadow = '0 20px 40px rgba(172,137,255,0.06)';
+  } else {
+    nav.style.background = 'rgba(14,14,19,0.6)';
+    nav.style.boxShadow = 'none';
+  }
+
+  let current = '';
+  sections.forEach(section => {
+    const top = section.offsetTop - 200;
+    if (window.scrollY >= top) current = section.getAttribute('id');
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+  });
+});
+
+// ==========================================
+// THREE.JS 3D ANIMATED SPHERE
+// ==========================================
+(function initThreeScene() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas || window.innerWidth < 1024) return;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+  camera.position.z = 5.5;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  // Animated Sphere with custom shader
+  const geometry = new THREE.IcosahedronGeometry(1.1, 20);
+
+  const vertexShader = `
+    varying vec3 vNormal;
+    varying vec3 vPosition;
+    uniform float uTime;
+
+    vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+    vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+    vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+    vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+
+    float snoise(vec3 v) {
+      const vec2 C = vec2(1.0/6.0, 1.0/3.0);
+      const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+      vec3 i  = floor(v + dot(v, C.yyy));
+      vec3 x0 = v - i + dot(i, C.xxx);
+      vec3 g = step(x0.yzx, x0.xyz);
+      vec3 l = 1.0 - g;
+      vec3 i1 = min(g.xyz, l.zxy);
+      vec3 i2 = max(g.xyz, l.zxy);
+      vec3 x1 = x0 - i1 + C.xxx;
+      vec3 x2 = x0 - i2 + C.yyy;
+      vec3 x3 = x0 - D.yyy;
+      i = mod289(i);
+      vec4 p = permute(permute(permute(
+        i.z + vec4(0.0, i1.z, i2.z, 1.0))
+        + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+        + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+      float n_ = 0.142857142857;
+      vec3 ns = n_ * D.wyz - D.xzx;
+      vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+      vec4 x_ = floor(j * ns.z);
+      vec4 y_ = floor(j - 7.0 * x_);
+      vec4 x = x_ * ns.x + ns.yyyy;
+      vec4 y = y_ * ns.x + ns.yyyy;
+      vec4 h = 1.0 - abs(x) - abs(y);
+      vec4 b0 = vec4(x.xy, y.xy);
+      vec4 b1 = vec4(x.zw, y.zw);
+      vec4 s0 = floor(b0)*2.0 + 1.0;
+      vec4 s1 = floor(b1)*2.0 + 1.0;
+      vec4 sh = -step(h, vec4(0.0));
+      vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;
+      vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+      vec3 p0 = vec3(a0.xy, h.x);
+      vec3 p1 = vec3(a0.zw, h.y);
+      vec3 p2 = vec3(a1.xy, h.z);
+      vec3 p3 = vec3(a1.zw, h.w);
+      vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+      p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+      vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+      m = m * m;
+      return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+    }
+
+    void main() {
+      vNormal = normal;
+      vPosition = position;
+      float noise = snoise(position * 0.8 + uTime * 0.3) * 0.35;
+      vec3 newPos = position + normal * noise;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(newPos, 1.0);
+    }
+  `;
+
+  const fragmentShader = `
+    varying vec3 vNormal;
+    varying vec3 vPosition;
+    uniform float uTime;
+
+    void main() {
+      vec3 cyan = vec3(0.56, 0.96, 1.0);
+      vec3 violet = vec3(0.67, 0.54, 1.0);
+      vec3 magenta = vec3(1.0, 0.35, 0.89);
+
+      float mixVal = sin(vPosition.y * 2.0 + uTime * 0.5) * 0.5 + 0.5;
+      float mixVal2 = cos(vPosition.x * 1.5 + uTime * 0.3) * 0.5 + 0.5;
+
+      vec3 color = mix(cyan, violet, mixVal);
+      color = mix(color, magenta, mixVal2 * 0.4);
+
+      float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.5);
+      color += fresnel * 0.4;
+
+      float alpha = 0.7 + fresnel * 0.3;
+      gl_FragColor = vec4(color, alpha);
+    }
+  `;
+
+  const material = new THREE.ShaderMaterial({
+    vertexShader,
+    fragmentShader,
+    uniforms: { uTime: { value: 0 } },
+    transparent: true,
+    wireframe: false
+  });
+
+  const sphere = new THREE.Mesh(geometry, material);
+  scene.add(sphere);
+
+  // Wireframe overlay
+  const wireGeo = new THREE.IcosahedronGeometry(1.25, 4);
+  const wireMat = new THREE.MeshBasicMaterial({
+    color: 0x8ff5ff,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.06
+  });
+  const wireframe = new THREE.Mesh(wireGeo, wireMat);
+  scene.add(wireframe);
+
+  // Orbiting particles
+  const particleCount = 80;
+  const particleGeo = new THREE.BufferGeometry();
+  const positions = new Float32Array(particleCount * 3);
+  for (let i = 0; i < particleCount; i++) {
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(Math.random() * 2 - 1);
+    const r = 1.6 + Math.random() * 1.0;
+    positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+    positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+    positions[i * 3 + 2] = r * Math.cos(phi);
+  }
+  particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particleMat = new THREE.PointsMaterial({
+    color: 0xac89ff,
+    size: 0.03,
+    transparent: true,
+    opacity: 0.8
+  });
+  const particles = new THREE.Points(particleGeo, particleMat);
+  scene.add(particles);
+
+  let mouseX = 0, mouseY = 0;
+  document.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const time = performance.now() * 0.001;
+    material.uniforms.uTime.value = time;
+
+    sphere.rotation.y = time * 0.15 + mouseX * 0.3;
+    sphere.rotation.x = time * 0.1 + mouseY * 0.2;
+
+    wireframe.rotation.y = -time * 0.08;
+    wireframe.rotation.x = time * 0.05;
+
+    particles.rotation.y = time * 0.05;
+    particles.rotation.x = -time * 0.03;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth < 1024) return;
+    camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+  });
+})();
+
+// ==========================================
+// PARTICLE BACKGROUND
+// ==========================================
+(function initParticles() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * w;
+      this.y = Math.random() * h;
+      this.vx = (Math.random() - 0.5) * 0.3;
+      this.vy = (Math.random() - 0.5) * 0.3;
+      this.size = Math.random() * 1.5 + 0.5;
+      this.alpha = Math.random() * 0.5 + 0.1;
+      this.color = Math.random() > 0.5 ? '143,245,255' : '172,137,255';
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0 || this.x > w || this.y < 0 || this.y > h) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.color},${this.alpha})`;
+      ctx.fill();
+    }
+  }
+
+  const count = Math.min(60, Math.floor(w * h / 20000));
+  for (let i = 0; i < count; i++) particles.push(new Particle());
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    particles.forEach(p => { p.update(); p.draw(); });
+
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(143,245,255,${0.06 * (1 - dist / 150)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ==========================================
+// GSAP SCROLL ANIMATIONS
+// ==========================================
+gsap.registerPlugin(ScrollTrigger);
+
+// Reveal animations
+gsap.utils.toArray('.reveal').forEach((el, i) => {
+  gsap.to(el, {
+    opacity: 1,
+    y: 0,
+    duration: 0.9,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 88%',
+      toggleActions: 'play none none none'
+    },
+    delay: i % 3 * 0.12
+  });
+});
+
+gsap.utils.toArray('.reveal-left').forEach(el => {
+  gsap.to(el, {
+    opacity: 1,
+    x: 0,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 85%',
+      toggleActions: 'play none none none'
+    }
+  });
+});
+
+gsap.utils.toArray('.reveal-right').forEach(el => {
+  gsap.to(el, {
+    opacity: 1,
+    x: 0,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 85%',
+      toggleActions: 'play none none none'
+    }
+  });
+});
+
+gsap.utils.toArray('.reveal-scale').forEach(el => {
+  gsap.to(el, {
+    opacity: 1,
+    scale: 1,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 85%',
+      toggleActions: 'play none none none'
+    }
+  });
+});
+
+// Hero stagger reveal (uses .hero-reveal to avoid conflict with ScrollTrigger .reveal)
+gsap.to('.hero-reveal', {
+  opacity: 1,
+  y: 0,
+  stagger: 0.18,
+  duration: 1.2,
+  ease: 'power3.out',
+  delay: 0.3
+});
+
+// Parallax background orbs
+gsap.utils.toArray('[class*="blur-["]').forEach(orb => {
+  gsap.to(orb, {
+    y: -80,
+    scrollTrigger: {
+      trigger: orb.parentElement,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 1
+    }
+  });
+});
+
+// Skill bars animation
+gsap.utils.toArray('.skill-bar-glow').forEach(bar => {
+  const width = bar.style.width;
+  bar.style.width = '0%';
+  gsap.to(bar, {
+    width: width,
+    duration: 1.5,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: bar,
+      start: 'top 90%',
+      toggleActions: 'play none none none'
+    }
+  });
+});
+
+// Timeline numbers
+gsap.utils.toArray('.font-black.text-white\\/5').forEach(el => {
+  gsap.from(el, {
+    opacity: 0,
+    scale: 0.5,
+    duration: 1.2,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 85%',
+      toggleActions: 'play none none none'
+    }
+  });
+});
+
+// ==========================================
+// SECURITY: Sanitize input
+// ==========================================
+function sanitize(str) {
+  const el = document.createElement('div');
+  el.textContent = str;
+  return el.innerHTML;
+}
+
+function hasXSS(str) {
+  const dangerous = /<script|javascript:|on\w+\s*=|<iframe|<object|<embed|<form|<svg\s+on|eval\s*\(|document\.|window\.|\.cookie|\.innerHTML|alert\s*\(/i;
+  return dangerous.test(str);
+}
+
+// ==========================================
+// SECURITY: Rate limiter
+// ==========================================
+const rateLimiter = {
+  attempts: 0,
+  lastAttempt: 0,
+  maxAttempts: 3,
+  windowMs: 60000,
+  check() {
+    const now = Date.now();
+    if (now - this.lastAttempt > this.windowMs) {
+      this.attempts = 0;
+    }
+    this.lastAttempt = now;
+    this.attempts++;
+    return this.attempts <= this.maxAttempts;
+  }
+};
+
+// ==========================================
+// SECURITY: Disposable email blocker (client-side)
+// ==========================================
+const _disposableDomains = new Set([
+  'mailinator.com','guerrillamail.com','tempmail.com','throwaway.email','temp-mail.org',
+  'yopmail.com','10minutemail.com','fakeinbox.com','mailnull.com','trashmail.com',
+  'maildrop.cc','getnada.com','mohmal.com','burnermail.io','sharklasers.com',
+  'guerrillamail.de','guerrillamail.net','grr.la','discard.email','mailcatch.com',
+  'emailondeck.com','mytemp.email','tempmail.ninja','mailnesia.com','33mail.com',
+  'spamgourmet.com','inboxbear.com','dispostable.com','mailsac.com','tempmailo.com',
+  'emailfake.com','crazymailing.com','mail.tm','internxt.com','simplelogin.io',
+  'tempail.com','inboxkitten.com','emailtemporario.com.br','temporarioemail.com.br',
+  'tempmail.de','tempmail.eu','tempmail.it','tempmail.co','spambox.us','trashmail.io',
+  'harakirimail.com','jetable.com','meltmail.com','pookmail.com','mintemail.com',
+  'bugmenot.com','deadaddress.com','devnullmail.com','getairmail.com','guerrillamailblock.com'
+]);
+function isDisposableEmail(email) {
+  const domain = email.split('@')[1]?.toLowerCase();
+  if (!domain) return true;
+  if (_disposableDomains.has(domain)) return true;
+  for (const d of _disposableDomains) { if (domain.endsWith('.' + d)) return true; }
+  return false;
+}
+
+// ==========================================
+// SECURITY: Profanity filter (PT-BR + EN)
+// ==========================================
+const _profanityPatterns = [
+  /\bp[uú]t[ao]?\b/i,/\bfil[hx]a?\s*d[aeo]\s*p[uú]t[ao]?\b/i,/\bcaralh[oa]?\b/i,
+  /\bporra\b/i,/\bmerda\b/i,/\bc[uú]\b/i,/\bbuceta\b/i,/\bviado\b/i,/\bveado\b/i,
+  /\bfoder\b/i,/\bfod[aei]\b/i,/\bvai\s*(se\s*)?f[oó]d[eê]r?\b/i,/\barrombad[oa]\b/i,
+  /\bcuzã[oa]\b/i,/\bcorno\b/i,/\bdesgraçad[oa]\b/i,/\bfdp\b/i,/\bpqp\b/i,/\bvsf\b/i,
+  /\bvtnc\b/i,/\btmnc\b/i,/\besc[rk]ot[oa]\b/i,/\bpau\s+no\s+cu\b/i,
+  /\bf+u+c+k+\b/i,/\bs+h+i+t+\b/i,/\ba+s+s+h+o+l+e+\b/i,/\bb+i+t+c+h+\b/i,
+  /\bd+i+c+k+\b/i,/\bp+u+s+s+y+\b/i,/\bc+u+n+t+\b/i,/\bm+o+t+h+e+r+f+u+c+k/i,
+  /\bn+i+g+g/i,/\bf+a+g+g?o?t?\b/i,/\bretard/i,/\bstfu\b/i,/\bkys\b/i
+];
+function hasProfanity(text) {
+  const n = text.normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[0@]/g,'o').replace(/[1!|]/g,'i').replace(/[3]/g,'e')
+    .replace(/[4]/g,'a').replace(/[5$]/g,'s').replace(/[7]/g,'t');
+  for (const p of _profanityPatterns) { if (p.test(text) || p.test(n)) return true; }
+  return false;
+}
+
+// ==========================================
+// FORM HANDLER (hardened + Resend API)
+// ==========================================
+function handleSubmit(e) {
+  e.preventDefault();
+  const status = document.getElementById('form-status');
+  const form = e.target;
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  // Honeypot check
+  const hp = form.querySelector('[name="website"]');
+  if (hp && hp.value !== '') {
+    status.textContent = 'MENSAGEM ENVIADA COM SUCESSO!';
+    status.style.color = '#8ff5ff';
+    status.style.opacity = '1';
+    form.reset();
+    return false;
+  }
+
+  // Timing check (bots submit < 2s)
+  const loadTime = parseInt(form.dataset.loadtime || '0');
+  if (Date.now() - loadTime < 2000) {
+    return false;
+  }
+
+  // Rate limit
+  if (!rateLimiter.check()) {
+    status.textContent = 'MUITAS TENTATIVAS. AGUARDE UM MOMENTO.';
+    status.style.color = '#ff6e84';
+    status.style.opacity = '1';
+    return false;
+  }
+
+  // Validate all inputs
+  const inputs = form.querySelectorAll('input, textarea, select');
+  let valid = true;
+  inputs.forEach(input => {
+    if (input.type === 'hidden') return;
+    const val = input.value;
+    if (hasXSS(val)) {
+      valid = false;
+      input.value = '';
+      input.style.borderColor = '#ff6e84';
+    }
+    if (input.type === 'email' && val) {
+      const emailRe = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRe.test(val)) {
+        valid = false;
+        input.style.borderColor = '#ff6e84';
+      }
+    }
+    if (input.required && !val.trim()) {
+      valid = false;
+      input.style.borderColor = '#ff6e84';
+    }
+    if (val.length > 1000) {
+      valid = false;
+      input.value = val.substring(0, 1000);
+    }
+  });
+
+  if (!valid) {
+    status.textContent = 'VERIFIQUE OS CAMPOS DESTACADOS.';
+    status.style.color = '#ff6e84';
+    status.style.opacity = '1';
+    setTimeout(() => {
+      inputs.forEach(i => i.style.borderColor = '');
+      status.textContent = 'TEMPO DE RESPOSTA: GERALMENTE EM ATÉ 24 HORAS';
+      status.style.color = '';
+      status.style.opacity = '0.6';
+    }, 3000);
+    return false;
+  }
+
+  // Collect form data
+  const formInputs = form.querySelectorAll('input:not([type="hidden"]):not([name="website"]), textarea, select');
+  const name = formInputs[0].value.trim();
+  const email = formInputs[1].value.trim();
+  const projectType = formInputs[2].value;
+  const message = formInputs[3].value.trim();
+
+  // Block disposable emails
+  if (isDisposableEmail(email)) {
+    status.textContent = 'E-MAILS TEMPORÁRIOS NÃO SÃO ACEITOS.';
+    status.style.color = '#ff6e84';
+    status.style.opacity = '1';
+    formInputs[1].style.borderColor = '#ff6e84';
+    setTimeout(() => {
+      formInputs[1].style.borderColor = '';
+      status.textContent = 'TEMPO DE RESPOSTA: GERALMENTE EM ATÉ 24 HORAS';
+      status.style.color = ''; status.style.opacity = '0.6';
+    }, 4000);
+    return false;
+  }
+
+  // Block profanity
+  if (hasProfanity(name + ' ' + message + ' ' + projectType)) {
+    status.textContent = 'CONTEÚDO INAPROPRIADO DETECTADO.';
+    status.style.color = '#ff6e84';
+    status.style.opacity = '1';
+    setTimeout(() => {
+      status.textContent = 'TEMPO DE RESPOSTA: GERALMENTE EM ATÉ 24 HORAS';
+      status.style.color = ''; status.style.opacity = '0.6';
+    }, 4000);
+    return false;
+  }
+
+  // Loading state
+  submitBtn.disabled = true;
+  const btnInner = submitBtn.querySelector('div');
+  const originalHTML = btnInner.innerHTML;
+  btnInner.innerHTML = '<span style="font-family:Space Grotesk;font-weight:700;font-size:18px;letter-spacing:-0.5px;color:#f9f5fd;">ENVIANDO...</span>';
+  status.textContent = '';
+
+  // Send to API
+  fetch('/api/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email, projectType, message, website: hp ? hp.value : undefined })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      status.textContent = '✓ MENSAGEM ENVIADA COM SUCESSO!';
+      status.style.color = '#8ff5ff';
+      status.style.opacity = '1';
+      form.reset();
+    } else {
+      status.textContent = data.error || 'ERRO AO ENVIAR. TENTE NOVAMENTE.';
+      status.style.color = '#ff6e84';
+      status.style.opacity = '1';
+    }
+  })
+  .catch(() => {
+    status.textContent = 'ERRO DE CONEXÃO. TENTE NOVAMENTE.';
+    status.style.color = '#ff6e84';
+    status.style.opacity = '1';
+  })
+  .finally(() => {
+    submitBtn.disabled = false;
+    btnInner.innerHTML = originalHTML;
+    setTimeout(() => {
+      status.textContent = 'TEMPO DE RESPOSTA: GERALMENTE EM ATÉ 24 HORAS';
+      status.style.color = '';
+      status.style.opacity = '0.6';
+    }, 5000);
+  });
+
+  return false;
+}
+
+// Set form load timestamp for timing-based bot detection
+document.addEventListener('DOMContentLoaded', () => {
+  const f = document.getElementById('contact-form');
+  if (f) f.dataset.loadtime = Date.now();
+});
+
+// ==========================================
+// SECURITY: Contact data obfuscation (anti-scraper)
+// ==========================================
+(function deobfuscateContacts() {
+  const _e = [112,97,117,108,111,46,99,97,116,97,114,105,110,111,64,122,97,112,115,105,115,116,101,109,97,115,46,99,111,109,46,98,114];
+  const _p = [40,50,49,41,32,57,55,48,48,53,45,49,48,57,57];
+  const _w = [53,53,50,49,57,55,48,48,53,49,48,57,57];
+  const email = _e.map(c => String.fromCharCode(c)).join('');
+  const phone = _p.map(c => String.fromCharCode(c)).join('');
+  const waNum = _w.map(c => String.fromCharCode(c)).join('');
+
+  const display = document.getElementById('email-display');
+  const link = document.getElementById('email-link');
+  const footer = document.getElementById('email-footer');
+  if (display) display.textContent = email;
+  if (link) { link.href = 'mai' + 'lto:' + email; link.onclick = null; }
+  if (footer) footer.href = 'mai' + 'lto:' + email;
+
+  const phoneDisplay = document.getElementById('phone-display');
+  const phoneLink = document.getElementById('phone-link');
+  if (phoneDisplay) phoneDisplay.textContent = phone;
+  if (phoneLink) { phoneLink.href = 'https://wa' + '.me/' + waNum; phoneLink.onclick = null; }
+
+  const waSocial = document.getElementById('whatsapp-social');
+  if (waSocial) waSocial.href = 'https://wa' + '.me/' + waNum;
+})();
+
+// ==========================================
+// SECURITY: Disable right-click & source inspect shortcuts
+// ==========================================
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+  if (e.key === 'F12') e.preventDefault();
+  if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) e.preventDefault();
+  if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) e.preventDefault();
+  if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) e.preventDefault();
+  if (e.ctrlKey && (e.key === 'S' || e.key === 's')) e.preventDefault();
+});
+
+// ==========================================
+// SECURITY: Anti-iframe (clickjacking protection)
+// ==========================================
+if (window.self !== window.top) {
+  document.body.innerHTML = '';
+  window.top.location = window.self.location;
+}
+
+// ==========================================
+// SECURITY: Console warning
+// ==========================================
+console.log('%c⚠ ATENÇÃO', 'color:#ff6e84;font-size:32px;font-weight:bold;');
+console.log('%cEste é um recurso do navegador voltado para desenvolvedores.', 'color:#acaab1;font-size:14px;');
+console.log('%cSe alguém disse para você copiar/colar algo aqui, isso é um golpe.', 'color:#ff59e3;font-size:14px;');
+
+// ==========================================
+// SECURITY: Disable text selection on sensitive areas
+// ==========================================
+document.querySelectorAll('a[href*="mailto"], a[href*="wa.me"], a[href*="tel:"]').forEach(el => {
+  el.style.userSelect = 'none';
+  el.style.webkitUserSelect = 'none';
+});
+
+// ==========================================
+// DRAGGABLE GLASS CARDS (stay where dropped, snap back if out of bounds)
+// ==========================================
+(function initDraggableCards() {
+  const cards = document.querySelectorAll('.draggable-card');
+  const container = document.getElementById('hero');
+
+  cards.forEach(card => {
+    let isDragging = false;
+    let startX, startY, origX, origY, homeX, homeY, hasHome = false;
+
+    function getPos(e) {
+      if (e.touches) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      return { x: e.clientX, y: e.clientY };
+    }
+
+    function onStart(e) {
+      isDragging = true;
+      const pos = getPos(e);
+      const rect = card.getBoundingClientRect();
+      const parentRect = card.offsetParent.getBoundingClientRect();
+
+      startX = pos.x;
+      startY = pos.y;
+      origX = rect.left - parentRect.left;
+      origY = rect.top - parentRect.top;
+
+      if (!hasHome) {
+        homeX = origX;
+        homeY = origY;
+        hasHome = true;
+      }
+
+      card.classList.add('dragging');
+      card.style.position = 'absolute';
+      card.style.left = origX + 'px';
+      card.style.top = origY + 'px';
+      card.style.right = 'auto';
+      card.style.bottom = 'auto';
+      card.style.transform = 'scale(1.05)';
+      card.style.cursor = 'grabbing';
+
+      e.preventDefault();
+    }
+
+    function onMove(e) {
+      if (!isDragging) return;
+      const pos = getPos(e);
+      const dx = pos.x - startX;
+      const dy = pos.y - startY;
+
+      card.style.left = (origX + dx) + 'px';
+      card.style.top = (origY + dy) + 'px';
+      card.style.transform = 'scale(1.05) rotate(' + (dx * 0.03) + 'deg)';
+
+      e.preventDefault();
+    }
+
+    function isInsideBounds() {
+      const cardRect = card.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      const heroText = document.querySelector('#hero .w-full.lg\\:w-3\\/5');
+      const margin = 20;
+
+      const inContainer = (
+        cardRect.left >= containerRect.left - margin &&
+        cardRect.right <= containerRect.right + margin &&
+        cardRect.top >= containerRect.top - margin &&
+        cardRect.bottom <= containerRect.bottom + margin
+      );
+
+      if (!inContainer) return false;
+
+      if (heroText) {
+        const textRect = heroText.getBoundingClientRect();
+        const overlapsText = !(
+          cardRect.right < textRect.left ||
+          cardRect.left > textRect.right ||
+          cardRect.bottom < textRect.top ||
+          cardRect.top > textRect.bottom
+        );
+        if (overlapsText) return false;
+      }
+
+      return true;
+    }
+
+    function onEnd() {
+      if (!isDragging) return;
+      isDragging = false;
+      card.classList.remove('dragging');
+      card.style.cursor = 'grab';
+
+      if (isInsideBounds()) {
+        gsap.to(card, {
+          rotation: 0,
+          scale: 1,
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+      } else {
+        gsap.to(card, {
+          left: homeX,
+          top: homeY,
+          rotation: 0,
+          scale: 1,
+          duration: 0.8,
+          ease: 'elastic.out(1, 0.4)',
+        });
+      }
+    }
+
+    card.addEventListener('mousedown', onStart);
+    card.addEventListener('touchstart', onStart, { passive: false });
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('touchmove', onMove, { passive: false });
+    document.addEventListener('mouseup', onEnd);
+    document.addEventListener('touchend', onEnd);
+  });
+})();
+
+// ==========================================
+// SMOOTH SCROLL FOR NAV
+// ==========================================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>
